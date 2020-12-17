@@ -17,7 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ListFichs"></activity>
+        <activity android:name=".ListFormTemplate"></activity>
+        <activity android:name=".Profile" />
+        <activity android:name=".ListFichs" />
         <activity android:name=".FichasActivity" />
         <activity
             android:name=".Main2Activity"

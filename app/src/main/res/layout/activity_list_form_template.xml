@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="16dp"
-    android:orientation="vertical"
-    android:visibility="visible"
-    tools:context=".ListFichs">
-
+    tools:context=".ListFormTemplate">
 
     <TextView
         android:id="@+id/textView"
@@ -16,7 +14,7 @@
         android:layout_height="37dp"
         android:layout_gravity="center"
         android:background="@color/colorPrimary"
-        android:text="Fichas"
+        android:text="Templates"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
@@ -26,27 +24,11 @@
 
 
     <ListView
-        android:id="@+id/fichas"
-        android:layout_width="366dp"
-        android:layout_height="370dp"
-        android:longClickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:outlineAmbientShadowColor="@color/colorPrimary"
-        android:outlineSpotShadowColor="@color/colorPrimary">
-
+        android:outlineSpotShadowColor="@color/colorPrimary"
+        android:id="@+id/templates">
     </ListView>
 
-
-    <com.beardedhen.androidbootstrap.BootstrapButton
-        android:id="@+id/btnNewForm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="+ Nova ficha"
-        app:bootstrapBrand="secondary"
-        app:bootstrapSize="lg"
-        app:buttonMode="regular"
-        app:roundedCorners="true"
-        app:showOutline="true" />
 </LinearLayout>
-
-

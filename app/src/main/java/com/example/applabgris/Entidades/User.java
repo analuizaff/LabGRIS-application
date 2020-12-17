@@ -2,11 +2,23 @@ package com.example.applabgris.Entidades;
 
 import com.google.firebase.database.Exclude;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
     private String name;
     private String email;
     private String keyUser;
     private String password;
+    public Map<String, Boolean> users = new HashMap<>();
+
+    public User(){}
+
+    public User(String name, String email, String keyUser){
+        this.name = name;
+        this.email = email;
+        this.keyUser = keyUser;
+    }
 
     public String getName() {
         return name;
@@ -39,5 +51,16 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("name", name);
+        result.put("email", email);
+        result.put("keyUser", keyUser);
+
+        result.put("users", users);
+
+        return result;
     }
 }

@@ -99,7 +99,7 @@ public class MyExListAdapter extends BaseExpandableListAdapter
             view = inflater.inflate(R.layout.list_perguntas, null);
         }
         TextView txtPergunta = (TextView) view.findViewById(R.id.txtPerguntas);
-        txtPergunta.setText(topic.getTitulo());
+        txtPergunta.setText(topic.getTituloPergunta());
 
        // TextView txtAlt =  (TextView) view.findViewById(R.id.txtAlternativa);
        // txtAlt.setText(alternativas.get(0).getTituloAlternativa());

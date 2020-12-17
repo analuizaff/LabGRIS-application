@@ -9,7 +9,14 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Fichas</string>
-    <string name="menu_slideshow">Planejamentos</string>
+    <string name="menu_slideshow">Perfil</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_main2">MainActivity2</string>
+    <string name="username">Digite sua resposta...</string>
+    <string name="ok" />
+    <string name="cancelar">cancelar</string>
+    <string name="responder">ok</string>
+    <string name="question_name">pergunta.getTitulo()</string>
+    <string name="save">Salvar</string>
+    <string name="cancel">Cancelar</string>
 </resources>

@@ -108,6 +108,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
         //precisa de finish??
     }
+    private void abrirProfileUser(){
+        Intent intent = new Intent(MainActivity.this, Profile.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -116,6 +120,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if(item.getItemId() == R.id.nav_gallery){
             abrirListaFichas();
+        }
+        else if(item.getItemId() == R.id.nav_slideshow){
+            abrirProfileUser();
         }
         return true;
     }
