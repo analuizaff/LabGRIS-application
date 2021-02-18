@@ -14,13 +14,14 @@
         android:layout_height="37dp"
         android:layout_gravity="center"
         android:background="@color/colorPrimary"
-        android:text="Templates"
+        android:text="Modelos"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textColorLink="#FFFEFD"
         android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        />
 
 
     <ListView
@@ -28,7 +29,8 @@
         android:layout_height="wrap_content"
         android:outlineAmbientShadowColor="@color/colorPrimary"
         android:outlineSpotShadowColor="@color/colorPrimary"
-        android:id="@+id/templates">
+        android:id="@+id/templates"
+        android:longClickable="true">
     </ListView>
 
 </LinearLayout>

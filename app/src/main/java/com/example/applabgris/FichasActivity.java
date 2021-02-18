@@ -1,5 +1,6 @@
 package com.example.applabgris;
 
+import androidx.annotation.ContentView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -64,6 +65,8 @@ public class FichasActivity extends AppCompatActivity {
     Boolean ehNovaFicha = false;
     Ficha novaFicha;
 
+    TextView fichaNome;
+
 
 
 
@@ -72,20 +75,19 @@ public class FichasActivity extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
-        Log.d("TAG", "AAAAAAAAAAAAAAAAAAAAAAAAAAH");
-
         setContentView(R.layout.activity_fichas);
         Bundle extra = getIntent().getExtras();
         if(extra != null){
             nome = extra.getString("nomeFicha");
             Log.d("TAG", nome);
         }
+        fichaNome = (TextView) findViewById(R.id.fichaNome);
+        fichaNome.setText(nome);
 
         database = FirebaseDatabase.getInstance();
         //popularDadosListaFicha();
-        if(popularDadosFicha(nome) != true){
-            popularDadosTemplate(nome);
-        };
+        popularDadosFicha(nome);
+            //popularDadosTemplate(nome);
 
         expandableListView = (ExpandableListView) findViewById(R.id.ficha);
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {

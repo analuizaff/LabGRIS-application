@@ -81,8 +81,8 @@ public class ListFormTemplate extends AppCompatActivity {
     }
 
     private void abrirListaFichas(String nome){
-        Intent intent = new Intent(ListFormTemplate.this, FichasActivity.class);
-        intent.putExtra("nomeFicha", nome);
+        Intent intent = new Intent(ListFormTemplate.this, FormActivity.class);
+        intent.putExtra("nomeTemplate", nome);
         startActivity(intent);
     }
 }

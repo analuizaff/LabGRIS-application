@@ -6,12 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="16dp"
-    tools:context=".FichasActivity">
+    tools:context=".FichasActivity"
+    >
 
+    <TextView
+        android:id="@+id/fichaNome"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        android:textColorLink="@color/colorPrimary"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <ExpandableListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/ficha"/>
+        android:id="@+id/ficha"
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>

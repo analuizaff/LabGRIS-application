@@ -19,4 +19,7 @@
     <string name="question_name">pergunta.getTitulo()</string>
     <string name="save">Salvar</string>
     <string name="cancel">Cancelar</string>
+    <string name="confirm">Confirmar</string>
+    <string name="novoTitulo" color="white">Criar nova ficha</string>
+    <string name="novaFicha">Criar nova ficha</string>
 </resources>

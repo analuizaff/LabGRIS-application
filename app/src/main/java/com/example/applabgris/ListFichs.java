@@ -3,12 +3,18 @@ package com.example.applabgris;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,6 +41,7 @@ public class ListFichs extends AppCompatActivity {
 
     String nome;
     ArrayList<String> nomesFichas = new ArrayList<String>();
+    ArrayAdapter<String> arrayAdapter;
 
     ListView listView = null;
 
@@ -54,7 +61,8 @@ public class ListFichs extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //Toast.makeText(ListFichs.this, nomesFichas.get(i), Toast.LENGTH_SHORT).show();
-                abrirListaFichas(nomesFichas.get(i));
+                //abrirListaFichas(nomesFichas.get(i));
+                onCreateDialog(nomesFichas.get(i));
             }
         });
 
@@ -67,14 +75,30 @@ public class ListFichs extends AppCompatActivity {
             }
         });
 
+        EditText filter = findViewById(R.id.searchFilter);
+        filter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                (ListFichs.this).arrayAdapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
 
 
        //fillData();
     }
 
     public void popularDadosListaFicha(){
-        Log.d("TAG", "TIIIIIIIIIIIIIIIIIIITULOOOOOOOOOOOOOOOOOoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
-
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
         ref.child("fichaAppTeste").orderByChild("tituloFicha").addListenerForSingleValueEvent(new ValueEventListener(){
@@ -88,7 +112,7 @@ public class ListFichs extends AppCompatActivity {
                         nomesFichas.add(nome);
                         Log.d("TAG", nome);
                     }
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ListFichs.this, android.R.layout.simple_expandable_list_item_1, nomesFichas);
+                   arrayAdapter = new ArrayAdapter<String>(ListFichs.this, android.R.layout.simple_expandable_list_item_1, nomesFichas);
                     listView.setAdapter(arrayAdapter);
                 }
             }
@@ -104,10 +128,8 @@ public class ListFichs extends AppCompatActivity {
         Intent intent = new Intent(ListFichs.this, FichasActivity.class);
         intent.putExtra("nomeFicha", nome);
         startActivity(intent);
-
-
-        //precisa de finish??
     }
+
     public void fillData() {
 
         Ficha ficha = new Ficha();
@@ -163,5 +185,43 @@ public class ListFichs extends AppCompatActivity {
     public void openFormTemplates(){
         Intent intent = new Intent(this, ListFormTemplate.class);
         startActivity(intent);
+    }
+
+    public void onCreateDialog(final String nomeFicha) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(nomeFicha)
+                .setItems(R.array.colors_array, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                        if(which == 0){
+                            abrirListaFichas(nomeFicha);
+                        }
+                        else if(which == 1){
+                            confirmDialog(nomeFicha);
+                        }
+                    }
+                });
+        builder.create();
+        builder.show();
+    }
+    public void confirmDialog(final String nome) {
+        // Use the Builder class for convenient dialog construction
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Deseja excluir " + nome + "?")
+                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        reference = FirebaseDatabase.getInstance().getReference();
+                        reference.child("fichaAppTeste").child(nome).removeValue();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+        // Create the AlertDialog object and return it
+        builder.create();
+        builder.show();
     }
 }

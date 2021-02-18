@@ -24,6 +24,11 @@
         android:textSize="20dp"
         android:textStyle="bold" />
 
+    <EditText
+        android:layout_width="366dp"
+        android:layout_height="50dp"
+        android:id="@+id/searchFilter"/>
+
 
     <ListView
         android:id="@+id/fichas"

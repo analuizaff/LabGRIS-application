@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="colors_array">
+        <item>
+            Editar
+        </item>
+        <item>
+            Apagar
+        </item>
+        <item>
+            Download
+        </item>
+    </string-array>
+</resources>
