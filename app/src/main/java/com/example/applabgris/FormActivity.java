@@ -38,6 +38,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class FormActivity extends AppCompatActivity {
     //Template data
     String nome = null;
@@ -275,6 +277,7 @@ public class FormActivity extends AppCompatActivity {
     private void openNovaFicha(String nome){
         Intent intent = new Intent(FormActivity.this, FichasActivity.class);
         intent.putExtra("nomeFicha", nome);
+        Log.d("TAG", "-------> NOME: " +nome);
         startActivity(intent);
     }
 

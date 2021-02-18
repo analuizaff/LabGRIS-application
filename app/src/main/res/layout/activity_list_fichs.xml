@@ -29,16 +29,18 @@
         android:layout_height="50dp"
         android:id="@+id/searchFilter"/>
 
-
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ListView
         android:id="@+id/fichas"
         android:layout_width="366dp"
         android:layout_height="370dp"
         android:longClickable="true"
         android:outlineAmbientShadowColor="@color/colorPrimary"
-        android:outlineSpotShadowColor="@color/colorPrimary">
-
-    </ListView>
+        android:outlineSpotShadowColor="@color/colorPrimary"
+        android:animateLayoutChanges="true"/>
 
 
     <com.beardedhen.androidbootstrap.BootstrapButton

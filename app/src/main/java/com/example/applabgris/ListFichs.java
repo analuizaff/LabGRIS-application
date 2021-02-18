@@ -8,14 +8,17 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
@@ -31,6 +34,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class ListFichs extends AppCompatActivity {
 
     private DatabaseReference reference;
@@ -38,6 +43,8 @@ public class ListFichs extends AppCompatActivity {
     private DatabaseReference myRef;
 
     private BootstrapButton btnNewForm;
+
+    private ViewGroup containerView;
 
     String nome;
     ArrayList<String> nomesFichas = new ArrayList<String>();
@@ -55,16 +62,7 @@ public class ListFichs extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         listView = (ListView) findViewById(R.id.fichas);
 
-        popularDadosListaFicha();
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Toast.makeText(ListFichs.this, nomesFichas.get(i), Toast.LENGTH_SHORT).show();
-                //abrirListaFichas(nomesFichas.get(i));
-                onCreateDialog(nomesFichas.get(i));
-            }
-        });
+        listForms();
 
         btnNewForm = (BootstrapButton) findViewById(R.id.btnNewForm);
 
@@ -75,7 +73,7 @@ public class ListFichs extends AppCompatActivity {
             }
         });
 
-        EditText filter = findViewById(R.id.searchFilter);
+        /*EditText filter = findViewById(R.id.searchFilter);
         filter.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -91,11 +89,24 @@ public class ListFichs extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
 
             }
-        });
+        });*/
 
 
 
        //fillData();
+    }
+
+    public void listForms(){
+        popularDadosListaFicha();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //Toast.makeText(ListFichs.this, nomesFichas.get(i), Toast.LENGTH_SHORT).show();
+                //abrirListaFichas(nomesFichas.get(i));
+                onCreateDialog(nomesFichas.get(i));
+            }
+        });
     }
 
     public void popularDadosListaFicha(){
@@ -198,14 +209,40 @@ public class ListFichs extends AppCompatActivity {
                             abrirListaFichas(nomeFicha);
                         }
                         else if(which == 1){
-                            confirmDialog(nomeFicha);
+                            deleteForm(nomeFicha);
                         }
                     }
                 });
         builder.create();
         builder.show();
     }
-    public void confirmDialog(final String nome) {
+
+    //deletar ficha
+    public void deleteForm (final String nome){
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Certeza que deseja excluir " + nome + "?")
+                .setContentText("Não será possível reverter essa ação")
+                .setConfirmText("Sim")
+                .setCancelText("Cancelar")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        reference = FirebaseDatabase.getInstance().getReference();
+                        reference.child("fichaAppTeste").child(nome).removeValue();
+                        sweetAlertDialog.dismissWithAnimation();
+
+                        SucessMessage("Ficha apagada!");
+                    }
+                })
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismissWithAnimation();
+                    }
+                })
+                .show();
+    }
+    /*public void confirmDialog(final String nome) {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Deseja excluir " + nome + "?")
@@ -213,15 +250,22 @@ public class ListFichs extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         reference = FirebaseDatabase.getInstance().getReference();
                         reference.child("fichaAppTeste").child(nome).removeValue();
+                        recreate();
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
                     }
                 });
         // Create the AlertDialog object and return it
         builder.create();
         builder.show();
+    }*/
+
+    //SweetAlert sucess message
+    public void SucessMessage(String msgm) {
+        new SweetAlertDialog(ListFichs.this, SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText(msgm)
+                .show();
     }
 }

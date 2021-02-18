@@ -79,7 +79,10 @@ public class FichasActivity extends AppCompatActivity {
         Bundle extra = getIntent().getExtras();
         if(extra != null){
             nome = extra.getString("nomeFicha");
-            Log.d("TAG", nome);
+            Log.d("TAG","--------------------------------"+ nome + "------------------------------------------------");
+        }
+        else{
+            Log.d("TAG","--------------------- Não tem nome mesmo -------------------------------------");
         }
         fichaNome = (TextView) findViewById(R.id.fichaNome);
         fichaNome.setText(nome);
@@ -146,11 +149,11 @@ public class FichasActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String selectedItem  = (String) adapterView.getItemAtPosition(i);
-                updateAlternativas(keyFicha, selectedItem, true, i );
+                updateAlternativas(nome, selectedItem, true, i );
 
                 for(int j=0; j<alternativassTitulo.size(); j++){
                     if(alternativassTitulo.get(j) != selectedItem) {
-                        updateAlternativas(keyFicha, alternativassTitulo.get(j), false, j);
+                        updateAlternativas(nome, alternativassTitulo.get(j), false, j);
                     }
                 }
                 //Toast.makeText(FichasActivity.this, selectedItem, Toast.LENGTH_SHORT).show();
@@ -178,7 +181,7 @@ public class FichasActivity extends AppCompatActivity {
         builder.setView(dialogView).setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                updateRespostas(keyFicha, pergunta.getTituloPergunta(), edtResposta.getText().toString());
+                updateRespostas(nome, pergunta.getTituloPergunta(), edtResposta.getText().toString());
             }
         });
         builder.setView(dialogView).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -302,7 +305,7 @@ public class FichasActivity extends AppCompatActivity {
         return true;
     }
 
-    private void updateAlternativas(String keyFicha, String tituloAlternativa, boolean resposta, int iAlternativa){
+    private void updateAlternativas(String nome, String tituloAlternativa, boolean resposta, int iAlternativa){
 
         reference = FirebaseDatabase.getInstance().getReference();
         reference.child("fichaAppTeste");
@@ -312,11 +315,11 @@ public class FichasActivity extends AppCompatActivity {
         Map<String, Object> alternativaValues = alternativa.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/fichaAppTeste/" + keyFicha + "/categorias/"+posicaoCategoria+"/perguntas/"+posicaoPergunta+"/alternativas/"+iAlternativa, alternativaValues);
+        childUpdates.put("/fichaAppTeste/" + nome + "/categorias/"+posicaoCategoria+"/perguntas/"+posicaoPergunta+"/alternativas/"+iAlternativa, alternativaValues);
 
         reference.updateChildren(childUpdates);
     }
-    private void updateRespostas(String keyFicha, String tituloPergunta, String resposta){
+    private void updateRespostas(String nome, String tituloPergunta, String resposta){
 
         reference = FirebaseDatabase.getInstance().getReference();
         reference.child("fichaAppTeste");
@@ -326,7 +329,7 @@ public class FichasActivity extends AppCompatActivity {
         Map<String, Object> perguntaValues = pergunta.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/fichaAppTeste/" + keyFicha + "/categorias/"+posicaoCategoria+"/perguntas/"+posicaoPergunta+"/resposta/", resposta);
+        childUpdates.put("/fichaAppTeste/" + nome + "/categorias/"+posicaoCategoria+"/perguntas/"+posicaoPergunta+"/resposta/", resposta);
         Toast.makeText(this, "Resposta salva!", Toast.LENGTH_SHORT).show();
 
         reference.updateChildren(childUpdates);
